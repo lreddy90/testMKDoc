@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="None">
+        
+        
+        <link rel="shortcut icon" href="./img/favicon.ico">
+        <title>MoonshotSDK API Definitions</title>
+        <link href="./css/bootstrap-custom.min.css" rel="stylesheet">
+        <link href="./css/font-awesome-4.5.0.css" rel="stylesheet">
+        <link href="./css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="./css/highlight.css">
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+        <![endif]-->
+	
+	<script src="./js/jquery-1.10.2.min.js"></script>
+        <script src="./js/bootstrap-3.0.3.min.js"></script>
+        <script src="./js/highlight.pack.js"></script> 
+    </head>
+
+    <body class="homepage">
+
+        <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+
+        <!-- Collapsed navigation -->
+        <div class="navbar-header">
+            <a class="navbar-brand" href=".">MoonshotSDK API Definitions</a>
+        </div>
+
+        <!-- Expanded navigation -->
+        <div class="navbar-collapse collapse">
+
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="#" data-toggle="modal" data-target="#mkdocs_search_modal">
+                        <i class="fa fa-search"></i> Search
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+        <div class="container">
+                <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
+    <ul class="nav bs-sidenav">
+        <li class="main active"><a href="#philisp-sdk-api-definitions">Philisp SDK API Definitions</a></li>
+            <li><a href="#sdkconfiguration">SDKConfiguration</a></li>
+            <li><a href="#moonsdk">MoonSDK</a></li>
+            <li><a href="#moonsdk_api">MoonSDK_API</a></li>
+            <li><a href="#userconfiguration">UserConfiguration</a></li>
+            <li><a href="#philipsdeviceconfiguration">PhilipsDeviceConfiguration</a></li>
+            <li><a href="#philipsdevice">PhilipsDevice</a></li>
+    </ul>
+</div></div>
+                <div class="col-md-9" role="main">
+
+<h1 id="philisp-sdk-api-definitions">Philisp SDK API Definitions</h1>
+<h2 id="sdkconfiguration">SDKConfiguration</h2>
+<ul>
+<li>
+<p><code>-(id)init;</code> - Initializer for SDK object.</p>
+<p><strong> Properties with setter and getter </strong></p>
+<p>PhilipsSupportedDevices (NSArray) </p>
+<p>EncryptionKey (NSString) </p>
+<p>BackgroundSynch (Bool) </p>
+<p>DataDurationToStore (Integer) </p>
+<p>ConnectionTimeOut (Interval)</p>
+</li>
+</ul>
+<h2 id="moonsdk">MoonSDK</h2>
+<ul>
+<li>
+<p><code>-(void)initSDKWithConfiguration:(SDKConfiguration*)configObject withSuccess:(void(^))success failure:(void(^)(NSError *error))failure;</code></p>
+<pre><code>SDKConfiguration  # The SDKConfiguration object.
+success           # Sucess block.
+failure           # Failure block returns if any error.
+</code></pre>
+</li>
+<li>
+<p><code>-(float)getSDKVersion;</code> - Returns the version of SDK</p>
+</li>
+</ul>
+<h2 id="moonsdk_api">MoonSDK_API</h2>
+<p><strong>Pairing Public</strong></p>
+<ul>
+<li>
+<p><code>-(void)startPairingWithDeviceType(PhilipsDeviceType)type withUserManagerDetails(UserConfiguration )userInfoObject withSucess:(void (^)(NSDictionary *pairedDeviceInfo))sucess withfailure:(void(^)(NSError *error))failure;</code></p>
+<pre><code>Parameters
+type            # Type of Device to pair Philips device(Watch/Band). 
+userInfoObject  # UserConfiguration object which have user details.
+success         # Sucess block returns the details of pired device.
+failure         # Failure block returns if any error.
+</code></pre>
+</li>
+<li>
+<p><code>-(void)startPairingWithDeviceType(PhilipsDeviceType)type withSucess:(void (^))sucess withfailure:(void(^)(NSError *error))failure;</code></p>
+<pre><code>Parameters
+type            # Type of Device to pair Philips device(Watch/Band). 
+success         # Sucess block get calls after paired.
+failure         # Failure block returns if any error.
+</code></pre>
+</li>
+<li>
+<p><code>-(NSArray*)getAllPairedDevices;</code></p>
+<pre><code>Returns
+pairedList #returns the list of paired devices.
+</code></pre>
+</li>
+<li>
+<p><code>-(NSArray*)getListOfBondedDevicesForType:(PhilipsDeviceType)type;</code></p>
+<pre><code>Parameters
+type      # Type of Philips device(Watch/Band).
+
+Returns
+pairedList #returns the list of paired devices.
+</code></pre>
+</li>
+<li>
+<p><code>-(PhilipsDevice*)getDeviceForType:(PhilipsDeviceType)type;</code></p>
+<pre><code>Parameters
+type      # Type of Philips device(Watch/Band).
+
+Returns
+pairedList #returns the details of  device object(PhilipsDeviceConfiguration).
+</code></pre>
+</li>
+<li>
+<p><code>-(void)removePairingOfDevice(PhilipsDevice *)device cleanLocalData:(Bool)clean withSucess: (void (^)())success withfailure:(void(^)(NSError*error))failure;</code></p>
+<pre><code>Parameters
+device      # Philips device(Watch/Band) need to be removed.
+clean       # Bool value which decide to clear the DB.
+success     # Sucess block invokes after unpairing the device.
+failure     # Failure block returns if any error.
+</code></pre>
+</li>
+</ul>
+<p><strong>Pairing Private</strong></p>
+<ul>
+<li>
+<p><code>-(void)startScanForPairedDeviceType(PhilipsDeviceType)type withScanTimeOut(NSInteger)seconds forPairedList:(void(^)(NSArray *list))pairedList;</code></p>
+<pre><code>Parameters
+type            # Type of Device to be scan Philips device(Watch/Band). 
+seconds         # Scanning time out
+pairedList      # Returns the Array of paired devices.
+</code></pre>
+</li>
+<li>
+<p><code>-(void)startScanForPairedDeviceType(PhilipsDeviceType)type withPairedList:(void(^)(NSArray *list))pairedList;</code></p>
+<pre><code>Parameters
+type            # Type of Device to be scan Philips device(Watch/Band). 
+pairedList      # Returns the Array of paired devices.
+</code></pre>
+</li>
+<li>
+<p><code>-(void)injectAssociationDeviceID(NSSting *)deviceMACaddress withfailureError:(void(^)(NSError *error))error;</code></p>
+<pre><code>Parameters
+deviceMACaddress # Address of device need to be injected.
+failure          # Failure block returns if any error.
+</code></pre>
+</li>
+<li>
+<p><code>-(void)connectDevice(PhilipsDevice *)device withSucess:(void (^)())sucess withfailure:(void(^) (NSError *error))failure;</code></p>
+<pre><code>Parameters
+device      # Type of Philips device(Watch/Band) need to connect.
+success     # Sucess block invokes once device get connected.
+failure     # Failure block returns if any error.
+</code></pre>
+</li>
+<li>
+<p><code>-(void)connectDevice(PhilipsDevice *)device withConnectTimeOut(NSInteger)seconds withSucess:(void (^)())sucess withfailure:(void(^)(NSError *error))failure;</code></p>
+<pre><code>Parameters
+device      # Type of Philips device(Watch/Band) need to connect.
+seconds     # connection time out interval
+success     # Sucess block invokes once device get connected .
+failure     # Failure block returns if any error.
+</code></pre>
+</li>
+<li>
+<p><code>-(void)disconnectDevice(PhilipsDevice *)device withSucess:(void (^)())sucess withfailure: (void(^)(NSError *error))failure;</code></p>
+<pre><code>Parameters
+device      # Type of Philips device(Watch/Band) to disconnect.
+success     # Sucess block invokes once disconnect the device.
+failure     # Failure block returns if any error.
+</code></pre>
+</li>
+</ul>
+<p><strong>Synching Public</strong></p>
+<ul>
+<li>
+<p><code>-(void)startSynchForDevice(PhilipsDevice *)device with delegate:(Id)delegate;</code></p>
+<pre><code>Parameters
+device      # Type of Philips device(Watch/Band) need to synch.
+delegate    # protocol to get updates on synching process.
+</code></pre>
+</li>
+<li>
+<p><code>-(void)setSynchTimeout(NSTimeInterval)timeout;</code></p>
+<pre><code>Parameters
+timeout     # Synching connection time out.
+</code></pre>
+</li>
+<li>
+<p><code>-(void)stopSynch;</code> - To stop synching.</p>
+</li>
+</ul>
+<p><strong>Synching Delegate</strong></p>
+<ul>
+<li>
+<p><code>-(void)didUpdateProgress:(Float)progress;</code></p>
+<pre><code>Parameters
+progress    # Provies the progress percentage of synching.
+</code></pre>
+</li>
+<li>
+<p><code>-(void)didFailSynchWithError(NSError *)error;</code></p>
+<pre><code>Parameters
+error     # Invokes while failur in synching along with error.
+</code></pre>
+</li>
+<li>
+<p><code>-(void)didFinishSynching;</code> - Invoked when synching completed</p>
+</li>
+</ul>
+<p><strong>Synching Private</strong></p>
+<ul>
+<li><code>-(id)initSynchManagerWithTimeout(NSTimeInterval)timeout isBeaconEnabled(Bool)isEnabled
+withSucess:(void (^)())sucess withfailure:(void(^)(NSError *error))failure;</code><pre><code>Parameters
+timeout     # Synching connection time out.
+isEnabled   # To enable/disbale the beacon
+success     # Sucess block invokes once creation of synch manager instance.
+failure     # Failure block returns if any error.
+</code></pre>
+</li>
+</ul>
+<p><strong>Observations Public</strong></p>
+<ul>
+<li>
+<p><code>-(NSArray*)getDataFromLocalDBForObservationType:(ObservationType)type fromDate:(NSDate*)startDate toDate:(NSDate*)endDate;</code></p>
+<pre><code>Parameters
+type        # Type of observation.
+startDate   # From the date,the observations to be fetched.
+endDate     # Till the date,the observations to be fetched.
+
+Returns     # List of observations between Start and End dates
+</code></pre>
+</li>
+<li>
+<p><code>-(Float*)getMinForObservationType:(ObservationType)type forDevice:(PhilipsDevice*)device;</code></p>
+<pre><code>Parameters
+type        # Type of observation.
+device      # Philips device details.
+
+Returns     # Minimum value of ObservationType.
+</code></pre>
+</li>
+<li>
+<p><code>-(Float*)getMaxForObservationType:(ObservationType)type forDeviceType: (PhilipsDevice*)device;</code></p>
+<pre><code>Parameters
+type        # Type of observation.
+device      # Philips device details.
+
+Returns     # Maximum value of ObservationType.
+</code></pre>
+</li>
+<li>
+<p><code>-(NSArray*)getDayTotalForObservationType:(ObservationType)type day(NSDate*)date forDeviceType:(PhilipsDevice*)device;</code></p>
+<pre><code>Parameters
+type        # Type of observation.
+day         # Date of observation.
+device      # Philips device details.
+
+Returns     # List of Observations of the give date.
+</code></pre>
+</li>
+<li>
+<p><code>-(NSArray*)getAllObservationforDeviceType(PhilipsDevice*)device start(NSDate*)date end(NSDate*)date;</code></p>
+<pre><code>Parameters
+device      # Philips device details.
+startDate   # From the date, the observations to be fetched.
+endDate     # Till the date, the observations to be fetched.
+
+Returns     # List of Observations between the given dates.
+</code></pre>
+</li>
+<li>
+<p><code>-(NSArray*)getLatestObservationForObservationType:(ObservationType)type forDeviceType: (PhilipsDevice*)device;</code></p>
+<pre><code>Parameters
+type        # Type of observation.
+device      # Philips device details.
+
+Returns     # List of Observations of current day.
+</code></pre>
+</li>
+<li>
+<p><code>-(NSArray*)getSupportedObservationTypesForDeviceTypes:(PhilipsDevice*)device;</code></p>
+<pre><code>Parameters
+device      # Philips device details.
+
+Returns     # List of supported Observations of the philips device.
+</code></pre>
+</li>
+<li>
+<p><code>-(NSArray*)getAllObservationsDeviceType:(PhilipsDevice*)device start(NSDate*)startDate end(NSDate*)endDate;</code></p>
+<pre><code>Parameters
+device      # Philips device details.
+startDate   # From the date, the observations to be fetched.
+endDate     # Till the date, the observations to be fetched.
+
+Returns     # List of Observations between start and end dates.
+</code></pre>
+</li>
+<li>
+<p><code>-(NSArray*)getLatestObservationTypesForDevice:(PhilipsDevice*)device;</code></p>
+<pre><code>Parameters
+device      # Philips device details.
+
+Returns     # List of Observation types of current day.
+</code></pre>
+</li>
+<li>
+<p><code>-(NSArray*)getObservationForObservationType:(ObservationType)type forDeviceType:(PhilipsDevice*)device from(NSDate*)startDate to(NSDate*)endDate;</code></p>
+<pre><code>Parameters
+type        # Type of observation.
+device      # Philips device details.
+startDate   # From the date, the observations to be fetched.
+endDate     # Till the date, the observations to be fetched.
+
+Returns     # List of Observations between start and end dates.
+</code></pre>
+</li>
+<li>
+<p><code>-(void)clearAllObservations;</code> - Delete all the observations from local DB.</p>
+</li>
+<li>
+<p><code>-(void)clearAllObservationsForDeviceType:(PhilipsDevice*)device;</code> - Delete all the observations from local DB for give philips device.</p>
+</li>
+</ul>
+<p><strong>Observations Private</strong></p>
+<ul>
+<li>
+<p><code>-(id)initCoreDataManagerWithDataDuration:(Integer)daysToStore withModelName:(NSString*)name
+storFolder:(NSString*)storeFolder withPassPhrase :(NSString*)key;</code></p>
+<pre><code>Parameters
+daysToStore # Number of days Local storage need to be maintained.
+name        # Name of the local DB.
+storeFolder # Path of the local storage.
+key         # Key used for encryption/decryption.
+
+Returns     # instance of core data manager.
+</code></pre>
+</li>
+<li>
+<p><code>–(void)setup;</code> - Core data releated setup.</p>
+</li>
+<li>
+<p><code>-(void)createObservations:(NSArray*)observations withDeviceType:(PhilipsDevice*)device;</code></p>
+<pre><code>Parameters
+observations    # List of observations to be stored.
+device          # Philips device details.
+</code></pre>
+</li>
+</ul>
+<p><strong>TargetSetting</strong></p>
+<ul>
+<li>
+<p><code>-(void)setActiveMinutes:(Integer)value forDevice(PhilipsDevice*)device;</code></p>
+<pre><code>Parameters
+value       # Active in minutes. 
+device      # Contains infomation about Philips device (PhilipsDeviceConfiguration).
+</code></pre>
+</li>
+<li>
+<p><code>-(void)setActiveCalories:(Integer)value forDevice(PhilipsDevice*)device;</code></p>
+<pre><code>Parameters
+value       # Count of active calories.
+device      # Contains infomation about Philips device (PhilipsDeviceConfiguration).
+</code></pre>
+</li>
+<li>
+<p><code>-(void)setSteps:(Integer)value forDevice(PhilipsDevice*)device;</code></p>
+<pre><code>Parameters
+value       # Count of active calories.
+device      # Contains infomation about Philips device (PhilipsDeviceConfiguration).
+</code></pre>
+</li>
+<li>
+<p><code>-(Integer)getActiveMinutesforDevice(PhilipsDevice*)device;</code></p>
+<pre><code>Returns
+Integer     # Active minutes.
+
+Parameter
+device      # Contains infomation about Philips device (PhilipsDeviceConfiguration).
+</code></pre>
+</li>
+<li>
+<p><code>-(Integer)getActiveCaloriesforDevice(PhilipsDevice*)device;</code></p>
+<pre><code>Return
+Integer     # Active calories.
+
+Parameter
+device      # Contains infomation about Philips device (PhilipsDeviceConfiguration).
+</code></pre>
+</li>
+<li>
+<p><code>-(Integer)getStepsforDevice(PhilipsDevice*)device;</code></p>
+<pre><code>Return
+Integer     # Active steps.
+
+Parameter
+device      # Contains infomation about Philips device (PhilipsDeviceConfiguration).
+</code></pre>
+</li>
+</ul>
+<h2 id="userconfiguration">UserConfiguration</h2>
+<ul>
+<li>
+<p><code>-(id)init;</code> -Initializer for User Configuration object</p>
+<p><strong> Properties with setter and getter </strong></p>
+<p>PhilipsSupportedDevices (NSArray) </p>
+<p>Height (Integer)</p>
+<p>Weight (Integer)</p>
+<p>Gender (Integer)</p>
+<p>DOB (NSDate) </p>
+<p>DeviceWearingPosition (Integer) </p>
+<p>UserDominantHand (Integer)</p>
+<p>ActiveMinutes (Integer) </p>
+<p>ActiveCalories (Integer) </p>
+<p>Steps (Integer)</p>
+</li>
+</ul>
+<h2 id="philipsdeviceconfiguration">PhilipsDeviceConfiguration</h2>
+<p>(Wrapper of BLE device)</p>
+<ul>
+<li>
+<p><code>-(id)init;</code> -Initializer for PhilipsDeviceConfiguration object</p>
+<p><strong> Properties with setter and getter </strong></p>
+<p>BatteryLevel (NSString)</p>
+<p>ComponentCTN (NSString)</p>
+<p>ComponentVersion (Integer)</p>
+<p>DatePaired (NSDate) </p>
+<p>DeviceID (NSString) </p>
+<p>FirmwareVersion (NSString)</p>
+<p>LastSynchDate (NSDate) </p>
+<p>MajorNumber (Integer) </p>
+<p>ManufacturName (NSString) </p>
+<p>MinorNumber (Integer) </p>
+<p>ModelName (NSString) </p>
+<p>ProximityUUID (NSString) </p>
+<p>SerialNumber (NSString)</p>
+</li>
+</ul>
+<h2 id="philipsdevice">PhilipsDevice</h2>
+<ul>
+<li>
+<p><code>-(id)init;</code>  Initializer for PhilipsDevice object.</p>
+</li>
+<li>
+<p><code>-(void)enableBeacon(Bool)isEnable;</code></p>
+<pre><code>Parameters
+isEnable    # To Enable/Disable iBeacon.
+</code></pre>
+</li>
+<li>
+<p><code>-(void)setBeaconFrequence:(Integert)value forDevice:(PhilipsDevice*)device;</code></p>
+<pre><code>Parameters
+value   # To set beacon frequence.
+device  # Contains infomation about Philips device (PhilipsDeviceConfiguration).
+</code></pre>
+</li>
+<li>
+<p><code>-(void)resetBeaconFrequenceforDevice:(PhilipsDevice*)device;</code></p>
+<pre><code>Parameters
+device      # Contains infomation about Philips device (PhilipsDeviceConfiguration).
+</code></pre>
+</li>
+<li>
+<p><code>-(void)setUnitsType:(Integer)unitsType;</code></p>
+<pre><code>Parameters
+unitsType   # To set units type.
+</code></pre>
+</li>
+<li>
+<p><code>–(void)stopFirmwareUploadToDevice:(PhilipsDevice*)device;</code></p>
+<pre><code>Parameters
+device      # Contains infomation about Philips device (PhilipsDeviceConfiguration).
+</code></pre>
+</li>
+<li>
+<p><code>–(void)diployFirmwareToDevice:(PhilipsDevice*)device;</code></p>
+<pre><code>Parameters
+device      # Contains infomation about Philips device (PhilipsDeviceConfiguration).
+</code></pre>
+</li>
+<li>
+<p><code>–(void)uploadFirmware:(NSData)firmware forDevice:(PhilipsDevice*)device;</code></p>
+<pre><code>Parameters
+firmware    # Firmware data to be diployed to Philips device.
+device      # Contains infomation about Philips device (PhilipsDeviceConfiguration).
+</code></pre>
+</li>
+</ul>
+<p><strong>PhilipsDevice Delegate</strong></p>
+<ul>
+<li>
+<p><code>-(void)didUpdateProgressofUpload:(Float)progress;</code> </p>
+<pre><code>Parameters
+progress    # Firmware delegate method invoked to update the progress.
+</code></pre>
+</li>
+<li>
+<p><code>-(void)didFinishUpload;</code> -Invoked once finished completed.</p>
+</li>
+<li>
+<p><code>-(void)didFailUploadWithError(NSError *)error;</code></p>
+<pre><code>Parameters
+error    # Invoked if any error occurred while uploding.
+</code></pre>
+</li>
+</ul></div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script>var base_url = '.';</script>
+        <script data-main="./mkdocs/js/search.js" src="./mkdocs/js/require.js"></script>
+        <script src="./js/base.js"></script><div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="exampleModalLabel">Search</h4>
+            </div>
+            <div class="modal-body">
+                <p>
+                    From here you can search these documents. Enter
+                    your search terms below.
+                </p>
+                <form role="form">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search..." id="mkdocs-search-query">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>
+
+<!--
+MkDocs version : 0.16.3
+Build Date UTC : 2017-08-03 11:09:39
+-->
